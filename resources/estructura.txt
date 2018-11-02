@@ -1,0 +1,12 @@
+.MainActivity
+..WelcomeActivity
+--Login
+....LoginActivity
+....FragmentLogin
+....FragmentLogon
+--MainPanel
+....MainActivity
+....MainFragment
+....TasksFragment
+....ContactsFragment
+....OptionsFragment

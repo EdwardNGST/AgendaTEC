@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">AgendaTEC</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="privacy_policies">Políticas de Privacidad</string>
+    <string name="txtcontinue">Continuar</string>
+    <string name="import_data">IMPORTAR DATOS EXISTENTES</string>
 </resources>
