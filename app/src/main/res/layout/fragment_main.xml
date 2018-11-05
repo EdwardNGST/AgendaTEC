@@ -1,14 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainPanel.MainFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <ImageView
+        android:id="@+id/btnFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_tune_white"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:contentDescription="@string/todo" />
 
-</FrameLayout>
+    <ImageView
+        android:id="@+id/btnHelp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_help_white"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:contentDescription="@string/todo" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnFilter"
+        android:layout_marginTop="20dp"
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:id="@+id/lblHour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hour"
+            android:textSize="50sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/lblHourT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hourT"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_toEndOf="@+id/lblHour"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

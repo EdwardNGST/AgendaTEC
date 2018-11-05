@@ -10,5 +10,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Intent intent = new Intent (getApplicationContext(), com.example.alan_.agendatec.WelcomeActivity.class);
         startActivityForResult(intent, 0);
+        finish();
     }
 }

@@ -131,10 +131,12 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     public void importData(View view) {
-        Toast.makeText(this, "Importar Datos", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent (getApplicationContext(), com.example.alan_.agendatec.Login.LoginActivity.class);
+        startActivityForResult(intent, 0);
     }
 
     public void btnContinue(View view) {
-        Toast.makeText(this, "Continuar", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent (getApplicationContext(), com.example.alan_.agendatec.MainPanel.MainActivity.class);
+        startActivityForResult(intent, 0);
     }
 }

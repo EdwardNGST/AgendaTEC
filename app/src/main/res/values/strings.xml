@@ -6,4 +6,19 @@
     <string name="privacy_policies">Políticas de Privacidad</string>
     <string name="txtcontinue">Continuar</string>
     <string name="import_data">IMPORTAR DATOS EXISTENTES</string>
+    <string name="login">Iniciar Sesión</string>
+    <string name="logon">Registrarse</string>
+    <string name="email">Correo Electrónico</string>
+    <string name="password">Contraseña</string>
+    <string name="forgotPassword">¿Olvidó su Contraseña?</string>
+    <string name="continueT">Continuar</string>
+    <string name="loginWithoutConnection">Inicio sin Conexión</string>
+    <string name="passwordVerify">Verificar Contraseña</string>
+    <string name="todo">TODO</string>
+    <string name="hour">HORA</string>
+    <string name="hourT">AM/PM</string>
+    <string name="resume">Resumen</string>
+    <string name="tasks">Tareas</string>
+    <string name="contacts">Contactos</string>
+    <string name="config">Configuración</string>
 </resources>
