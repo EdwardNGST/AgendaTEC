@@ -9,7 +9,6 @@ import android.os.Bundle;
 import com.example.alan_.agendatec.R;
 
 public class LoginActivity extends AppCompatActivity {
-    private TabLayout tabLayout;
     private int currentPosition;
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
@@ -18,7 +17,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        tabLayout = findViewById(R.id.tabFilter);
+        TabLayout tabLayout = findViewById(R.id.tabFilter);
 
         fragmentManager = getSupportFragmentManager();
         transaction = fragmentManager.beginTransaction();

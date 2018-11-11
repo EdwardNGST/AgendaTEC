@@ -7,4 +7,5 @@
     <color name="white">#fff</color>
     <color name="blueWhiteBackground">#D9EFFF</color>
     <color name="blueButton">#467EF7</color>
+    <color name="gray_1">#2d2d2d</color>
 </resources>

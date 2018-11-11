@@ -1,16 +1,37 @@
     package com.example.alan_.agendatec.MainPanel;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CalendarView;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.alan_.agendatec.Model.LocalDB.DatabaseHelper;
+import com.example.alan_.agendatec.Model.LocalDB.TableTasks;
 import com.example.alan_.agendatec.R;
 
-/**
+import org.w3c.dom.Text;
+
+import java.util.Calendar;
+
+    /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  * {@link TasksFragment.OnFragmentInteractionListener} interface
@@ -21,6 +42,19 @@ import com.example.alan_.agendatec.R;
 public class TasksFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
+    private DatabaseHelper localDB;
+    private Context context;
+    private TableTasks tasks;
+    private AlertDialog dialog;
+    private boolean aux=false;
+    private byte priority=0;
+
+    private EditText txtTitleNewTask;
+    private EditText txtDescNewTask;
+    private TextView lblDateNewTask;
+
+    private static final String TAG = "TaskFragment";
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -65,7 +99,119 @@ public class TasksFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tasks, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_tasks, container, false);
+
+        context=this.getContext();
+        localDB = new DatabaseHelper(context);
+
+        tasks = new TableTasks();
+        Cursor res=localDB.getTasks();
+        for (res.moveToFirst(); !res.isAfterLast(); res.moveToNext()) {
+            int id = res.getInt(0);
+            String title = res.getString(1);
+            String text = res.getString(2);
+            int priority = res.getInt(3);
+            String date = res.getString(4);
+
+            Log.i(TAG, "Registro numero: "+id+
+                    ",titulo: "+title+
+                    ",text: "+text+
+                    ",priority"+priority+
+                    ",date"+date);
+        }
+
+        CalendarView mCalendarView = view.findViewById(R.id.calendar_view);
+        long a = mCalendarView.getDate();
+        mCalendarView.setMinDate(a);
+
+        mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+                @Override
+                public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
+                    String date = i2 + "/" + (i1 + 1) + "/" + i;
+                    showDialog(date);
+                    //Log.i("TAG", "onSelectedTextChange: date: " + date);
+                }
+            }
+        );
+
+        return view;
+    }
+
+    private void showDialog(final String date){
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
+        @SuppressLint("InflateParams") View mView = getLayoutInflater().inflate(R.layout.dialog_new_task, null);
+
+        TextView lblNewTask =  mView.findViewById(R.id.lblNewTask);
+        txtTitleNewTask = mView.findViewById(R.id.txtTitleNewTask);
+        txtDescNewTask = mView.findViewById(R.id.txtDescNewTask);
+        lblDateNewTask = mView.findViewById(R.id.lblDateNewTask);
+        Button btnCleanDate = mView.findViewById(R.id.btnCleanDate);
+        //final Button btnShowCalendar = mView.findViewById(R.id.btnShowCalendar);
+        //final CalendarView calendar_view = mView.findViewById(R.id.calendar_view);
+        RadioGroup rgPriorityNewTask = mView.findViewById(R.id.rgPriorityNewTask);
+        RadioButton rbPriorityUrgent = mView.findViewById(R.id.rbPriorityUrgent);
+        RadioButton rbPriorityImportant = mView.findViewById(R.id.rbPriorityImportant);
+        RadioButton rbPriorityNormal = mView.findViewById(R.id.rbPriorityNormal);
+        Button btnRegister = mView.findViewById(R.id.btnRegister);
+
+
+
+        rgPriorityNewTask.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.rbPriorityUrgent:
+                        priority=1;
+                        break;
+                    case R.id.rbPriorityImportant:
+                        priority=2;
+                        break;
+                    case R.id.rbPriorityNormal:
+                        priority=3;
+                        break;
+                }
+            }
+        });
+
+        //calendar_view.setVisibility(View.INVISIBLE);
+
+        lblDateNewTask.setText("Fecha: " + date);
+
+        /*btnShowCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (aux) {
+                    btnShowCalendar.setText("Mostrar Calendario");
+                    calendar_view.setVisibility(View.INVISIBLE);
+                    aux=false;
+                }else{
+                    btnShowCalendar.setText("Ocultar Calendario");
+                    calendar_view.setVisibility(View.VISIBLE);
+                    aux=true;
+                }
+            }
+        });*/
+        btnCleanDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lblDateNewTask.setText("Fecha: Sin Asignar");
+            }
+        });
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(priority!=0) {
+                    Toast.makeText(context, "Insertando nuevo elemento", Toast.LENGTH_SHORT).show();
+                    localDB.insertNewTask(4, txtTitleNewTask.getText().toString(), txtDescNewTask.getText().toString(), priority, date);
+                }
+            }
+        });
+
+        mBuilder.setView(mView);
+        dialog = mBuilder.create();
+        dialog.show();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -81,8 +227,7 @@ public class TasksFragment extends Fragment {
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+
         }
     }
 

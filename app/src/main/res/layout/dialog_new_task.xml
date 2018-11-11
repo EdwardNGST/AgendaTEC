@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/lblNewTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/gray_1"
+            android:layout_marginTop="20dp"
+            android:text="@string/newTask"/>
+
+        <EditText
+            android:id="@+id/txtTitleNewTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/titleTask"
+            android:layout_below="@+id/lblNewTask"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:inputType="text"/>
+
+        <EditText
+            android:id="@+id/txtDescNewTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:layout_below="@+id/txtTitleNewTask"
+            android:lines="5"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:hint="@string/descriptionTask"/>
+
+        <TextView
+            android:id="@+id/lblDateNewTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtDescNewTask"
+            android:layout_marginTop="10dp"
+            android:textSize="15sp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"/>
+
+        <Button
+            android:id="@+id/btnCleanDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_toEndOf="@+id/lblDateNewTask"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/txtDescNewTask"
+            android:text="@string/clean"/>
+
+        <!--Button
+            android:id="@+id/btnShowCalendar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_below="@+id/lblDateNewTask"
+            android:text="@string/showCalendar"/>
+
+        <HorizontalScrollView
+            android:id="@+id/layout_calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnShowCalendar"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp">
+
+            <CalendarView
+                android:id="@+id/calendar_view"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"/>
+
+        </HorizontalScrollView-->
+
+        <RadioGroup
+            android:id="@+id/rgPriorityNewTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnCleanDate"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp">
+
+            <RadioButton
+                android:id="@+id/rbPriorityUrgent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/priorityUrgent"
+                android:textColor="@android:color/holo_red_dark"
+                android:outlineAmbientShadowColor="@android:color/holo_red_dark"/>
+
+            <RadioButton
+                android:id="@+id/rbPriorityImportant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/priorityImportant"
+                android:textColor="@android:color/holo_orange_light"/>
+
+            <RadioButton
+                android:id="@+id/rbPriorityNormal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/priorityNormal"
+                android:textColor="@android:color/holo_green_light"/>
+
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_below="@+id/rgPriorityNewTask"
+            android:text="@string/register"/>
+
+    </RelativeLayout>
+
+
+
+</ScrollView>

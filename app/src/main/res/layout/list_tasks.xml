@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.80">
+
+        <ImageView
+            android:id="@+id/imgBackgroundTask"
+            android:layout_width="15dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/holo_green_dark"/>
+
+        <TextView
+            android:id="@+id/lblTitleTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:textSize="25sp"
+            android:layout_toEndOf="@+id/imgBackgroundTask"
+            android:text="@string/titleTask"/>
+
+        <TextView
+            android:id="@+id/lblDescTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_toEndOf="@+id/imgBackgroundTask"
+            android:layout_below="@+id/lblTitleTask"
+            android:text="@string/descriptionTask"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.20">
+
+
+
+    </RelativeLayout>
+
+</LinearLayout>

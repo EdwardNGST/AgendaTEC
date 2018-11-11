@@ -21,4 +21,24 @@
     <string name="tasks">Tareas</string>
     <string name="contacts">Contactos</string>
     <string name="config">Configuración</string>
+    <string name="currentTask">Tarea Actual</string>
+    <string name="wecandothisExample">We can do this!</string>
+    <string name="textExample1">Apparently we had reached a great height in the atmosphere, for the…</string>
+    <string name="agree">Aceptar</string>
+    <string name="posponer">Posponer</string>
+    <string name="currentTaskToday">Tareas Importantes de Hoy</string>
+    <string name="dayExample">Lunes</string>
+    <string name="dateExample">22 de Agosto</string>
+    <string name="titleTask">Titulo</string>
+    <string name="descriptionTask">Descripción</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="newTask">Nueva Tarea</string>
+    <string name="priorityUrgent">Urgente</string>
+    <string name="priorityImportant">Importante</string>
+    <string name="priorityNormal">Normal</string>
+    <string name="register">Registrar Tarea</string>
+    <string name="date">Fecha</string>
+    <string name="showCalendar">Mostrar Calendario</string>
+    <string name="clean">Limpiar</string>
+    <string name="hideCalendar">Ocultar Calendario</string>
 </resources>
