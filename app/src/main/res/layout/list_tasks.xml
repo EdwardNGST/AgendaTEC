@@ -16,7 +16,8 @@
             android:id="@+id/imgBackgroundTask"
             android:layout_width="15dp"
             android:layout_height="match_parent"
-            android:background="@android:color/holo_green_dark"/>
+            android:background="@android:color/holo_green_dark"
+            android:contentDescription="@string/todo" />
 
         <TextView
             android:id="@+id/lblTitleTask"
@@ -38,13 +39,13 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
+    <!--RelativeLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.20">
 
 
 
-    </RelativeLayout>
+    </RelativeLayout-->
 
 </LinearLayout>

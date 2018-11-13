@@ -9,15 +9,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class WelcomeActivity extends AppCompatActivity {
     private ViewPager mSlideViewPager;
     private LinearLayout mDotLayout;
 
-    private TextView[] mDots;
-
-    private SliderAdapter sliderAdapter;
     private int mCurrentPage=0;
 
     private Button btnContinue, btnImport;
@@ -39,7 +35,7 @@ public class WelcomeActivity extends AppCompatActivity {
         btnContinue.setVisibility(View.INVISIBLE);
         btnPrivacyPolicies.setVisibility(View.INVISIBLE);
 
-        sliderAdapter = new SliderAdapter(this);
+        SliderAdapter sliderAdapter = new SliderAdapter(this);
         mSlideViewPager.setAdapter(sliderAdapter);
 
         //start=(Button)findViewById(R.id.btnStart);
@@ -60,9 +56,9 @@ public class WelcomeActivity extends AppCompatActivity {
     }*/
 
     public void addDotsIndicator(int position){
-        mDots=new TextView[3];
+        TextView[] mDots = new TextView[3];
         mDotLayout.removeAllViews();
-        for (int i=0; i<mDots.length; i++){
+        for (int i = 0; i< mDots.length; i++){
             mDots[i]=new TextView(this);
             mDots[i].setText(Html.fromHtml("&#8226"));
             mDots[i].setTextSize(35);
@@ -71,7 +67,6 @@ public class WelcomeActivity extends AppCompatActivity {
         }
 
         if (mDots.length>0){
-
             mDots[position].setTextColor(getResources().getColor(R.color.primaryBlueWhite));
         }
 

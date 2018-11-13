@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:background="@color/blueButton"
-        android:layout_alignParentTop="true"/>
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/todo" />
 
 
         <ImageView
@@ -74,7 +75,8 @@
         android:layout_marginTop="130dp"
         app:borderWidth="0dp"
         app:srcCompat="@drawable/ic_add_white"
-        android:backgroundTint="@android:color/holo_orange_light"/>
+        android:backgroundTint="@android:color/holo_orange_light"
+        tools:ignore="RelativeOverlap" />
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"

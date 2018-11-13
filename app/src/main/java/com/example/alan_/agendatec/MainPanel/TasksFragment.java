@@ -54,6 +54,7 @@ public class TasksFragment extends Fragment {
     private EditText txtDescNewTask;
     private TextView lblDateNewTask;
 
+    private static int idMax = 0;
     private static final String TAG = "TaskFragment";
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -107,6 +108,7 @@ public class TasksFragment extends Fragment {
 
         tasks = new TableTasks();
         Cursor res=localDB.getTasks();
+
         for (res.moveToFirst(); !res.isAfterLast(); res.moveToNext()) {
             int id = res.getInt(0);
             String title = res.getString(1);
@@ -115,10 +117,10 @@ public class TasksFragment extends Fragment {
             String date = res.getString(4);
 
             Log.i(TAG, "Registro numero: "+id+
-                    ",titulo: "+title+
-                    ",text: "+text+
-                    ",priority"+priority+
-                    ",date"+date);
+                    ", titulo: "+title+
+                    ", text: "+text+
+                    ", priority: "+priority+
+                    ", date: "+date);
         }
 
         CalendarView mCalendarView = view.findViewById(R.id.calendar_view);
@@ -154,8 +156,6 @@ public class TasksFragment extends Fragment {
         RadioButton rbPriorityImportant = mView.findViewById(R.id.rbPriorityImportant);
         RadioButton rbPriorityNormal = mView.findViewById(R.id.rbPriorityNormal);
         Button btnRegister = mView.findViewById(R.id.btnRegister);
-
-
 
         rgPriorityNewTask.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
@@ -202,10 +202,17 @@ public class TasksFragment extends Fragment {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Cursor res=localDB.getTasks();
+
+                for (res.moveToFirst(); !res.isAfterLast(); res.moveToNext()) {
+                    idMax= res.getInt(0);
+                }
+                idMax=idMax+1;
                 if(priority!=0) {
                     Toast.makeText(context, "Insertando nuevo elemento", Toast.LENGTH_SHORT).show();
-                    localDB.insertNewTask(4, txtTitleNewTask.getText().toString(), txtDescNewTask.getText().toString(), priority, date);
+                    localDB.insertNewTask(idMax, txtTitleNewTask.getText().toString(), txtDescNewTask.getText().toString(), priority, date);
                 }
+                dialog.hide();
             }
         });
 
