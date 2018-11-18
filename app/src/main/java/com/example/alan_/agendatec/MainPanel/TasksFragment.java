@@ -10,6 +10,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,12 +26,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.alan_.agendatec.Model.Adapters.TasksAdapter;
+import com.example.alan_.agendatec.Model.Class.Tasks;
 import com.example.alan_.agendatec.Model.LocalDB.DatabaseHelper;
 import com.example.alan_.agendatec.Model.LocalDB.TableTasks;
 import com.example.alan_.agendatec.R;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
     /**
@@ -58,6 +64,10 @@ public class TasksFragment extends Fragment {
     private static final String TAG = "TaskFragment";
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private static ArrayList<Tasks> tasksList;
+    private static TasksAdapter tasksAdapter;
+    private RecyclerView rvListTasks;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -127,6 +137,20 @@ public class TasksFragment extends Fragment {
         long a = mCalendarView.getDate();
         mCalendarView.setMinDate(a);
 
+        rvListTasks=view.findViewById(R.id.rvListTasks);
+        tasksList=new ArrayList<>();
+        tasksAdapter=new TasksAdapter(tasksList);
+
+        rvListTasks.setItemAnimator(new DefaultItemAnimator());
+
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
+        rvListTasks.setLayoutManager(manager);
+
+        rvListTasks.setAdapter(tasksAdapter);
+        rvListTasks.setHasFixedSize(true);
+
+        showList(res);
+
         mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
                 @Override
                 public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
@@ -139,6 +163,26 @@ public class TasksFragment extends Fragment {
 
         return view;
     }
+
+        private void showList(Cursor res) {
+            for (res.moveToFirst(); !res.isAfterLast(); res.moveToNext()) {
+                int id = res.getInt(0);
+                String title = res.getString(1);
+                String text = res.getString(2);
+                int priority = res.getInt(3);
+                String date = res.getString(4);
+
+                if(priority==1) {
+                    tasksList.add(new Tasks(id, title, text, (byte) priority, date + "\n Urgente"));
+                }else if(priority==2){
+                    tasksList.add(new Tasks(id, title, text, (byte) priority, date + "\n Importante"));
+                }else if(priority==3){
+                    tasksList.add(new Tasks(id, title, text, (byte) priority, date + "\n Normal"));
+                }else{
+                    tasksList.add(new Tasks(id, title, text, (byte) priority, date));
+                }
+            }
+        }
 
     private void showDialog(final String date){
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
@@ -156,6 +200,8 @@ public class TasksFragment extends Fragment {
         RadioButton rbPriorityImportant = mView.findViewById(R.id.rbPriorityImportant);
         RadioButton rbPriorityNormal = mView.findViewById(R.id.rbPriorityNormal);
         Button btnRegister = mView.findViewById(R.id.btnRegister);
+
+
 
         rgPriorityNewTask.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {

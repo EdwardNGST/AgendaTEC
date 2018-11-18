@@ -102,7 +102,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/priorityUrgent"
-                android:textColor="@android:color/holo_red_dark"/>
+                android:textColor="#FF0000"/>
 
             <RadioButton
                 android:id="@+id/rbPriorityImportant"
@@ -110,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/priorityImportant"
-                android:textColor="@android:color/holo_orange_light"/>
+                android:textColor="#EFA000"/>
 
             <RadioButton
                 android:id="@+id/rbPriorityNormal"
@@ -118,7 +118,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/priorityNormal"
-                android:textColor="@android:color/holo_green_light"/>
+                android:textColor="#64DD17"/>
 
         </RadioGroup>
 
