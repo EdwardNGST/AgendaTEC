@@ -9,6 +9,7 @@ import android.os.Bundle;
 import com.example.alan_.agendatec.R;
 
 public class LoginActivity extends AppCompatActivity {
+    //Declaracion de variables
     private int currentPosition;
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
@@ -21,16 +22,19 @@ public class LoginActivity extends AppCompatActivity {
 
         fragmentManager = getSupportFragmentManager();
         transaction = fragmentManager.beginTransaction();
-
+        //Agrega al transaction el fragmento que tendra por default
         transaction.replace(R.id.framelogin, new FragmentLogin()).commit();
+        //Asigna el titulo a la aplicación
         setTitle("Iniciar Sesión");
-
+        //Escuchador del tablayout (Las pestañas de arriba)
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
+            //Metodo que se ejecuta cada que seleccionamos una pestaña del tablayout
             @Override
             public void onTabSelected(TabLayout.Tab tab){
                 currentPosition = tab.getPosition();
                 fragmentManager = getSupportFragmentManager();
                 transaction = fragmentManager.beginTransaction();
+                //CurrentPosition obtiene la posicion que se ha seleccionado de la pestaña y muestra su respectivo fragmento
                 if(currentPosition==0){
                     transaction.replace(R.id.framelogin, new FragmentLogin()).commit();
                 }else if(currentPosition==1){

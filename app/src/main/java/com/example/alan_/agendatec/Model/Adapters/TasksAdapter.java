@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ContainerView>{
     private ArrayList<Tasks> tasksList;
-
+    //ESTE METODO POR AHORA NO HACE MUCHO
     @NonNull
     @Override
     public TasksAdapter.ContainerView onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -33,6 +33,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ContainerVie
         this.tasksList=tasks;
     }
 
+    //Este metodo asigna los textos a los elementos
     @Override
     public void onBindViewHolder(@NonNull TasksAdapter.ContainerView containerView, int position) {
         final Tasks tasks = tasksList.get(position);
@@ -60,11 +61,13 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ContainerVie
         }
     }
 
+    //Obtiene un valor de la cantidad de elementos en la lista
     @Override
     public int getItemCount() {
         return tasksList.size();
     }
 
+    //Declaracion de variables
     public class ContainerView extends RecyclerView.ViewHolder {
         ImageView priorityColor;
         TextView lblTitleTask;

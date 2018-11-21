@@ -10,10 +10,10 @@ import android.util.Log;
 import java.sql.SQLInput;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private static final String tasksdb="tasksdb.db";
+    private static final String tasksdb="tasksdb.db";//Guarda el nombre de la base de datos
     private Context context;
-    private TableTasks tasks = new TableTasks();
-    private QueryHelper queryHelper = new QueryHelper();
+    private TableTasks tasks = new TableTasks();//Estructura de la base de datos
+    private QueryHelper queryHelper = new QueryHelper();//Guarda metodos indispensables que puede que se utilicen varias veces
     private static final String TAG = "DatabaseHelper";
 
     public DatabaseHelper(Context context){

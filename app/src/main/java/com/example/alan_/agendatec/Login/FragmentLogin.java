@@ -60,7 +60,7 @@ public class FragmentLogin extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
+    //El unico metodo utilizado que funciona como el onCreate de un activity normal / Devuelve la vista
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

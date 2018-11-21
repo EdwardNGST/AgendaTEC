@@ -15,6 +15,12 @@ public class Tasks {
         this.date = date;
     }
 
+    public Tasks(int id, String title, String text){
+        this.id=id;
+        this.title=title;
+        this.text=text;
+    }
+
     public int getId() {
         return id;
     }

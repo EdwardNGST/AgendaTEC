@@ -1,13 +1,17 @@
 package com.example.alan_.agendatec.Model.LocalDB;
 
+/***********************
+ * ESTA CLASE PRETENDE GUARDAR LA ESTRUCTURA DE NUESTRA BASE DE DATOS CON EL FIN DE AL MANDAR A LLAMAR
+ * CUALQUIER COSA DE LA BASE DE DATOS NO TENER QUE RECORDAR EL NOMBRE DE CADA ELEMENTO
+ */
 public class TableTasks {
-    private String tableName;
+    private String tableName;//Nombre de la tabla
 
-    private String id;
-    private String title;
-    private String text;
-    private String priority;
-    private String date;
+    private String id;//Id de la tarea
+    private String title;//Titulo de la tarea
+    private String text;//Texto
+    private String priority;//Prioridad (Urgente/Importante/Normal)
+    private String date;//Fecha en la que se necesita recordar esta tarea
 
     private String stringQuery;
 
@@ -20,6 +24,7 @@ public class TableTasks {
         priority="priorityTask";
         date="dateTask";
 
+        //Esta variable guarda la cadena completa para el create de la tabla de tareas
         stringQuery="CREATE TABLE "+tableName+"("+
                 id+" NUMBER PRIMARY KEY,"+
                 title+" TEXT, "+

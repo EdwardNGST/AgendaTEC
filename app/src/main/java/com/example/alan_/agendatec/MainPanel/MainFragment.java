@@ -1,14 +1,26 @@
 package com.example.alan_.agendatec.MainPanel;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.alan_.agendatec.Model.Adapters.ResumeAdapter;
+import com.example.alan_.agendatec.Model.Adapters.TasksAdapter;
+import com.example.alan_.agendatec.Model.Class.Tasks;
+import com.example.alan_.agendatec.Model.LocalDB.DatabaseHelper;
+import com.example.alan_.agendatec.Model.LocalDB.TableTasks;
 import com.example.alan_.agendatec.R;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,8 +31,21 @@ import com.example.alan_.agendatec.R;
  * create an instance of this fragment.
  */
 public class MainFragment extends Fragment {
+    private static final String TAG = "MainFragment";
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    //Declaracion de variables
+    //El DatabaseHelper es la base de nuestra base de datos local
+    private DatabaseHelper localDB;
+    //TableTasks tiene toda la estructura de nuestra tabla de tareas
+    private TableTasks tasks;
+    //Arreglo de la clase tareas
+    private static ArrayList<Tasks> tasksList;
+    //Instancia del Adaptador Resumen
+    private static ResumeAdapter tasksAdapter;
+    private RecyclerView rvListTasks;
+    private Context context;
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -43,6 +68,7 @@ public class MainFragment extends Fragment {
      * @return A new instance of fragment MainFragment.
      */
     // TODO: Rename and change types and number of parameters
+    //ESTE METODO NO LO UTILIZO
     public static MainFragment newInstance(String param1, String param2) {
         MainFragment fragment = new MainFragment();
         Bundle args = new Bundle();
@@ -51,7 +77,7 @@ public class MainFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
+    //ESTE METODO NO LO UTILIZO
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,14 +86,53 @@ public class MainFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
+    //METODO onCreate
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
+
+        context=this.getContext();
+        //LocalDB se utilizara para obtener los datos de la base de datos local
+        localDB = new DatabaseHelper(context);
+        //El siguiente cursor traera los datos de la tabla tareas
+        Cursor res=localDB.getTasks();
+
+        rvListTasks=view.findViewById(R.id.rvListTasks);
+        tasksList=new ArrayList<>();
+        //Se agrega la lista de tareas al adaptador
+        tasksAdapter=new ResumeAdapter(tasksList);
+
+        rvListTasks.setItemAnimator(new DefaultItemAnimator());
+
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
+
+        rvListTasks.setLayoutManager(manager);
+        //Se agrega al recyclerview el adaptador
+        rvListTasks.setAdapter(tasksAdapter);
+        rvListTasks.setHasFixedSize(true);
+        //Recorre el cursor
+        for (res.moveToFirst(); !res.isAfterLast(); res.moveToNext()) {
+            //Cada una de las posiciones del registro obtenido por el cursor se asignan a una variable
+            int id = res.getInt(0);
+            String title = res.getString(1);
+            String text = res.getString(2);
+            int priority = res.getInt(3);
+            String date = res.getString(4);
+
+            //Con esto verificaremos si la prioridad de la tarea es "Urgente" ya que queremos mostrar solo las tareas Urgentes
+            if(priority==1) {
+                //Se agrega la tarea a la lista que esta enlazada con el recyclerview, por lo tanto se actualiza el recyclerview
+                tasksList.add(new Tasks(id, title, text));
+            }
+        }
+
+        //Se retorna la vista
+        return view;
     }
 
+    //ESTE METODO NO LO UTILIZO
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -75,6 +140,7 @@ public class MainFragment extends Fragment {
         }
     }
 
+    //ESTE METODO NO LO UTILIZO
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -84,6 +150,7 @@ public class MainFragment extends Fragment {
         }
     }
 
+    //ESTE METODO NO LO UTILIZO
     @Override
     public void onDetach() {
         super.onDetach();
@@ -100,6 +167,8 @@ public class MainFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
+
+    //ESTE METODO NO LO UTILIZO
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
