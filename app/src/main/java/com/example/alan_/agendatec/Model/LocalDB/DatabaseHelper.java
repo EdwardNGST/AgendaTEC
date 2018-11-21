@@ -20,18 +20,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, tasksdb, null, 1);
         this.context=context;
     }
-
+    //Metodo que crea la base de datos
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(tasks.getStringQuery());
     }
-
+    //Metodo que se ejecuta cuando cambia la estructura de la tabla
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS "+tasks.getTableName());
         onCreate(db);
     }
-
+    //Metodo que elimina todos los datos de la tabla de tareas
     public void truncateTable(){
         SQLiteDatabase db = this.getWritableDatabase();
         String query="";
@@ -39,7 +39,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(query);
         db.execSQL("VACUUM;");
     }
-
+    //Metodo que inserta una nueva tarea
     public String insertNewTask(int id, String title, String text, byte priority, String date){
         SQLiteDatabase db = this.getWritableDatabase();
         /*Cursor res=db.rawQuery(queryHelper.verifyMaxID(id), null);
@@ -63,13 +63,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
         //}
     }
-
+    //Metodo para insertar nuevos elementos por default (PARA PRUEBAS)
     public void insertElements(){
         insertNewTask(1, "Titulo de tarea 1", "Descripcion de la tarea 1", (byte) 1, "12/11/2018");
         insertNewTask(2, "Titulo de tarea 2", "Descripcion de la tarea 2", (byte) 3, "12/11/2018");
         insertNewTask(3, "Titulo de tarea 3", "Descripcion de la tarea 3", (byte) 2, "16/11/2018");
     }
-
+    //Obtener todos los registros de la tabla
     public Cursor getTasks(){
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery(queryHelper.getAllTasks(), null);
