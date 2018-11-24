@@ -55,4 +55,30 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     };
+
+    private void getTime(){
+        Thread t=new Thread(){
+            int count=1;
+            @Override
+            public void run(){
+                //Este while permitira crear un bucle infinito, lo que significa que siempre se estara cambiando de posicion
+                while(count==1){
+                    try {
+                        //El tiempo que tardara en cambiar el slider
+                        Thread.sleep(10000);  //1000ms = 1 sec
+                        //Esto se ejecutara despues de los 10 segundos
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                            }
+                        });
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        t.start();
+    }
 }

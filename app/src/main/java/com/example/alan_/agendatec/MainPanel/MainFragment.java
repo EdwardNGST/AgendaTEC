@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.alan_.agendatec.Model.Adapters.ResumeAdapter;
 import com.example.alan_.agendatec.Model.Adapters.TasksAdapter;
@@ -21,6 +22,7 @@ import com.example.alan_.agendatec.Model.LocalDB.TableTasks;
 import com.example.alan_.agendatec.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,6 +47,17 @@ public class MainFragment extends Fragment {
     private static ResumeAdapter tasksAdapter;
     private RecyclerView rvListTasks;
     private Context context;
+    private TextView lblHour;
+    private TextView lblHourT;
+    private Calendar rightNow;
+
+    private int hora=0, minuto=0, segundo=0;
+    private Thread iniReloj=null;
+    private Runnable r;
+    private boolean isUpdate = false;
+    private String sec, min, hor;
+    private String curTime;
+    private Calendar c;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -104,6 +117,9 @@ public class MainFragment extends Fragment {
         //Se agrega la lista de tareas al adaptador
         tasksAdapter=new ResumeAdapter(tasksList);
 
+        lblHour=view.findViewById(R.id.lblHour);
+        lblHourT=view.findViewById(R.id.lblHourT);
+
         rvListTasks.setItemAnimator(new DefaultItemAnimator());
 
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
@@ -112,6 +128,11 @@ public class MainFragment extends Fragment {
         //Se agrega al recyclerview el adaptador
         rvListTasks.setAdapter(tasksAdapter);
         rvListTasks.setHasFixedSize(true);
+
+        r=new RefreshClock();
+        iniReloj=new Thread(r);
+        iniReloj.start();
+
         //Recorre el cursor
         for (res.moveToFirst(); !res.isAfterLast(); res.moveToNext()) {
             //Cada una de las posiciones del registro obtenido por el cursor se asignan a una variable
@@ -130,6 +151,82 @@ public class MainFragment extends Fragment {
 
         //Se retorna la vista
         return view;
+    }
+
+    private void updateTime(){
+        c= Calendar.getInstance();
+        hora=c.get(Calendar.HOUR);
+        minuto=c.get(Calendar.MINUTE);
+
+        setZeroClock();
+    }
+
+    private void settingNewClock(){
+        setZeroClock();
+
+        if (minuto>=0&minuto<=59){
+
+        }else{
+            minuto=0;
+            hora+=1;
+        }
+
+        if (hora>=0&hora<=24){
+
+        }else{
+            hora=0;
+        }
+    }
+
+    private void setZeroClock(){
+        if (hora>=0&hora<=9){
+            hor="0";
+        }else{
+            hor="";
+        }
+
+        if (minuto>=0&minuto<=9){
+            min=":0";
+        }else {
+            min=":";
+        }
+    }
+
+    private void initClock(){
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (isUpdate){
+                        settingNewClock();
+                    }else{
+                        updateTime();
+                    }
+                    curTime=hor+hora+min+minuto;
+                    lblHour.setText(curTime);
+                    byte h = (byte) c.get(Calendar.HOUR_OF_DAY);
+                    if (h<12){
+                        lblHourT.setText("AM");
+                    }else{
+                        lblHourT.setText("PM");
+                    }
+                }catch (Exception e){}
+            }
+        });
+    }
+
+    class RefreshClock implements Runnable{
+        @SuppressWarnings("unused")
+        public void run(){
+            while (!Thread.currentThread().isInterrupted()){
+                try {
+                    initClock();
+                    Thread.sleep(1000);
+                }catch (InterruptedException e){
+                    Thread.currentThread().isInterrupted();
+                }catch (Exception ignored){}
+            }
+        }
     }
 
     //ESTE METODO NO LO UTILIZO

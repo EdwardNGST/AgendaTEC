@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -54,7 +55,8 @@ public class TasksFragment extends Fragment {
 
     private EditText txtTitleNewTask;
     private EditText txtDescNewTask;
-    private TextView lblDateNewTask;
+    private TextView lblDateNewTask, lblDay, lblDate;
+    private FloatingActionButton fab;
 
     private static int idMax = 0;
     private static final String TAG = "TaskFragment";
@@ -139,6 +141,87 @@ public class TasksFragment extends Fragment {
         rvListTasks.setHasFixedSize(true);
         //El siguiente metodo muestra la lista
         showList(res);
+
+        fab=view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialog("");
+            }
+        });
+
+        lblDay = view.findViewById(R.id.lblDay);
+        lblDate = view.findViewById(R.id.lblDate);
+        Calendar c = Calendar.getInstance();
+        int dayOfWeek=c.get(Calendar.DAY_OF_WEEK);
+        int numberDayOfMonth=c.get(Calendar.DAY_OF_MONTH);
+        int month=c.get(Calendar.MONTH);
+        switch (month){
+            case 1:
+                lblDate.setText(numberDayOfMonth+" de Febrero");
+                break;
+            case 2:
+                lblDate.setText(numberDayOfMonth+" de Marzo");
+                break;
+            case 3:
+                lblDate.setText(numberDayOfMonth+" de Abril");
+                break;
+            case 4:
+                lblDate.setText(numberDayOfMonth+" de Mayo");
+                break;
+            case 5:
+                lblDate.setText(numberDayOfMonth+" de Junio");
+                break;
+            case 6:
+                lblDate.setText(numberDayOfMonth+" de Julio");
+                break;
+            case 7:
+                lblDate.setText(numberDayOfMonth+" de Agosto");
+                break;
+            case 8:
+                lblDate.setText(numberDayOfMonth+" de Septiembre");
+                break;
+            case 9:
+                lblDate.setText(numberDayOfMonth+" de Octubre");
+                break;
+            case 10:
+                lblDate.setText(numberDayOfMonth+" de Noviembre");
+                break;
+            case 11:
+                lblDate.setText(numberDayOfMonth+" de Diciembre");
+                break;
+            case 12:
+                lblDate.setText(numberDayOfMonth+" de Enero");
+                break;
+            default:
+                lblDate.setText("");
+        }
+        switch (dayOfWeek){
+            case 1:
+                lblDay.setText("Domingo");
+                break;
+            case 2:
+                lblDay.setText("Lunes");
+                break;
+            case 3:
+                lblDay.setText("Martes");
+                break;
+            case 4:
+                lblDay.setText("Miercoles");
+                break;
+            case 5:
+                lblDay.setText("Jueves");
+                break;
+            case 6:
+                lblDay.setText("Viernes");
+                break;
+            case 7:
+                lblDay.setText("Sabado");
+                break;
+            default:
+                lblDay.setText("");
+        }
+
         //Escuchador del calendario, obtiene el dia mes y año y lo envia al dialogo de inserccion de tareas para despues mostrar este
         mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
                 @Override
@@ -152,27 +235,27 @@ public class TasksFragment extends Fragment {
         return view;
     }
 
-        private void showList(Cursor res) {
-            //Recorre el cursor
-            for (res.moveToFirst(); !res.isAfterLast(); res.moveToNext()) {
-                //Cada una de las posiciones del registro obtenido por el cursor se asignan a una variable
-                int id = res.getInt(0);
-                String title = res.getString(1);
-                String text = res.getString(2);
-                int priority = res.getInt(3);
-                String date = res.getString(4);
-                //Con lo siguiente verificaremos que prioridad tiene el elemento del cursor y dependiendo de esto agregaremos la tarea a la lista con el mensaje (Urgente/Importante/Normal) dependiendo de la prioridad
-                if(priority==1) {
-                    tasksList.add(new Tasks(id, title, text, (byte) priority, date + "\n Urgente"));
-                }else if(priority==2){
-                    tasksList.add(new Tasks(id, title, text, (byte) priority, date + "\n Importante"));
-                }else if(priority==3){
-                    tasksList.add(new Tasks(id, title, text, (byte) priority, date + "\n Normal"));
-                }else{
-                    tasksList.add(new Tasks(id, title, text, (byte) priority, date));
-                }
+    private void showList(Cursor res) {
+        //Recorre el cursor
+        for (res.moveToFirst(); !res.isAfterLast(); res.moveToNext()) {
+            //Cada una de las posiciones del registro obtenido por el cursor se asignan a una variable
+            int id = res.getInt(0);
+            String title = res.getString(1);
+            String text = res.getString(2);
+            int priority = res.getInt(3);
+            String date = res.getString(4);
+            //Con lo siguiente verificaremos que prioridad tiene el elemento del cursor y dependiendo de esto agregaremos la tarea a la lista con el mensaje (Urgente/Importante/Normal) dependiendo de la prioridad
+            if(priority==1) {
+                tasksList.add(new Tasks(id, title, text, (byte) priority, date + "\n Urgente"));
+            }else if(priority==2){
+                tasksList.add(new Tasks(id, title, text, (byte) priority, date + "\n Importante"));
+            }else if(priority==3){
+                tasksList.add(new Tasks(id, title, text, (byte) priority, date + "\n Normal"));
+            }else{
+                tasksList.add(new Tasks(id, title, text, (byte) priority, date));
             }
         }
+    }
 
     private void showDialog(final String date){
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
@@ -211,7 +294,11 @@ public class TasksFragment extends Fragment {
 
         //calendar_view.setVisibility(View.INVISIBLE);
 
-        lblDateNewTask.setText("Fecha: " + date);
+        if (date != "") {
+            lblDateNewTask.setText("Fecha: " + date);
+        }else{
+            lblDateNewTask.setText("Fecha: Sin Asignar");
+        }
 
         /*btnShowCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -227,6 +314,7 @@ public class TasksFragment extends Fragment {
                 }
             }
         });*/
+
         //Escuchador del boton que permite agregar una tarea sin fecha especificada
         btnCleanDate.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -44,15 +44,14 @@
                 android:id="@+id/lblHour"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/hour"
                 android:textSize="50sp"
                 android:textColor="@color/white"
                 android:textStyle="bold"/>
+
             <TextView
                 android:id="@+id/lblHourT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/hourT"
                 android:textSize="20sp"
                 android:textColor="@color/white"
                 android:textStyle="bold"
