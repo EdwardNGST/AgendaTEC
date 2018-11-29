@@ -1,10 +1,12 @@
 package com.example.alan_.agendatec.MainPanel;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.alan_.agendatec.Model.Adapters.ResumeAdapter;
@@ -50,6 +53,7 @@ public class MainFragment extends Fragment {
     private TextView lblHour;
     private TextView lblHourT;
     private Calendar rightNow;
+    private ImageView btnHelp;
 
     private int hora=0, minuto=0, segundo=0;
     private Thread iniReloj=null;
@@ -113,6 +117,7 @@ public class MainFragment extends Fragment {
         Cursor res=localDB.getTasks();
 
         rvListTasks=view.findViewById(R.id.rvListTasks);
+        btnHelp=view.findViewById(R.id.btnHelp);
         tasksList=new ArrayList<>();
         //Se agrega la lista de tareas al adaptador
         tasksAdapter=new ResumeAdapter(tasksList);
@@ -148,6 +153,22 @@ public class MainFragment extends Fragment {
                 tasksList.add(new Tasks(id, title, text));
             }
         }
+
+        btnHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+                alertDialog.setTitle("Alert");
+                alertDialog.setMessage("Alert message to be shown");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Continuar",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+            }
+        });
 
         //Se retorna la vista
         return view;

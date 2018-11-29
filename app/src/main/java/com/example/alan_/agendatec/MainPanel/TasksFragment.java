@@ -2,6 +2,7 @@
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -21,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -57,6 +59,7 @@ public class TasksFragment extends Fragment {
     private EditText txtDescNewTask;
     private TextView lblDateNewTask, lblDay, lblDate;
     private FloatingActionButton fab;
+    private ImageView btnHelp;
 
     private static int idMax = 0;
     private static final String TAG = "TaskFragment";
@@ -152,6 +155,7 @@ public class TasksFragment extends Fragment {
 
         lblDay = view.findViewById(R.id.lblDay);
         lblDate = view.findViewById(R.id.lblDate);
+        btnHelp = view.findViewById(R.id.btnHelp);
         Calendar c = Calendar.getInstance();
         int dayOfWeek=c.get(Calendar.DAY_OF_WEEK);
         int numberDayOfMonth=c.get(Calendar.DAY_OF_MONTH);
@@ -232,6 +236,22 @@ public class TasksFragment extends Fragment {
             }
         );
 
+        btnHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+                alertDialog.setTitle("Alert");
+                alertDialog.setMessage("Alert message to be shown");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Continuar",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+            }
+        });
+
         return view;
     }
 
@@ -266,8 +286,6 @@ public class TasksFragment extends Fragment {
         txtDescNewTask = mView.findViewById(R.id.txtDescNewTask);
         lblDateNewTask = mView.findViewById(R.id.lblDateNewTask);
         Button btnCleanDate = mView.findViewById(R.id.btnCleanDate);
-        //final Button btnShowCalendar = mView.findViewById(R.id.btnShowCalendar);
-        //final CalendarView calendar_view = mView.findViewById(R.id.calendar_view);
         RadioGroup rgPriorityNewTask = mView.findViewById(R.id.rgPriorityNewTask);
         RadioButton rbPriorityUrgent = mView.findViewById(R.id.rbPriorityUrgent);
         RadioButton rbPriorityImportant = mView.findViewById(R.id.rbPriorityImportant);
@@ -299,21 +317,6 @@ public class TasksFragment extends Fragment {
         }else{
             lblDateNewTask.setText("Fecha: Sin Asignar");
         }
-
-        /*btnShowCalendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (aux) {
-                    btnShowCalendar.setText("Mostrar Calendario");
-                    calendar_view.setVisibility(View.INVISIBLE);
-                    aux=false;
-                }else{
-                    btnShowCalendar.setText("Ocultar Calendario");
-                    calendar_view.setVisibility(View.VISIBLE);
-                    aux=true;
-                }
-            }
-        });*/
 
         //Escuchador del boton que permite agregar una tarea sin fecha especificada
         btnCleanDate.setOnClickListener(new View.OnClickListener() {
