@@ -139,6 +139,14 @@ public class TasksFragment extends Fragment {
 
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
         rvListTasks.setLayoutManager(manager);
+
+
+        /*TasksAdapter.RecyclerViewClickListener listener = (v, position) -> {
+            Toast.makeText(getContext(), "Position " + position, Toast.LENGTH_SHORT).show();
+        };*/
+
+
+
         //Se agrega al recyclerview el adaptador
         rvListTasks.setAdapter(tasksAdapter);
         rvListTasks.setHasFixedSize(true);

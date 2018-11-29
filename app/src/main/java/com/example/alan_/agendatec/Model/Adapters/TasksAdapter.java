@@ -20,7 +20,13 @@ import com.example.alan_.agendatec.R;
 import java.util.ArrayList;
 
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ContainerView>{
+    private RecyclerViewClickListener mListener;
     private ArrayList<Tasks> tasksList;
+
+    public interface RecyclerViewClickListener {
+        void onClick(View v, int position);
+    }
+
     //ESTE METODO POR AHORA NO HACE MUCHO
     @NonNull
     @Override
@@ -29,7 +35,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ContainerVie
                 viewGroup, false);
         //view.setOnClickListener(TasksFragment.eventOnClickListener);
 
-        return new ContainerView(view);
+        return new ContainerView(view, mListener);
     }
 
     public TasksAdapter(ArrayList<Tasks> tasks){
@@ -44,6 +50,8 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ContainerVie
         containerView.lblTitleTask.setText(tasks.getTitle());
         containerView.lblTextTask.setText(tasks.getText());
         containerView.lblDateTask.setText(tasks.getDate());
+
+        ContainerView rowHolder = (ContainerView) containerView;
 
         switch (tasks.getPriority()){
             case 1:
@@ -71,18 +79,29 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ContainerVie
     }
 
     //Declaracion de variables
-    public class ContainerView extends RecyclerView.ViewHolder {
+    public class ContainerView extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView priorityColor;
         TextView lblTitleTask;
         TextView lblTextTask;
         TextView lblDateTask;
-        public ContainerView(@NonNull View view) {
+
+        private RecyclerViewClickListener mListener;
+
+        public ContainerView(@NonNull View view, RecyclerViewClickListener listener) {
             super(view);
 
             this.priorityColor = view.findViewById(R.id.priorityColor);
             this.lblTitleTask = view.findViewById(R.id.lblTitleTask);
             this.lblTextTask = view.findViewById(R.id.lblTextTask);
             this.lblDateTask = view.findViewById(R.id.lblDateTask);
+
+            mListener = listener;
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            //mListener.onClick(view, getAdapterPosition());
         }
     }
 }
