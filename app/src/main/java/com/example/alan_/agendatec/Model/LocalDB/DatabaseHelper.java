@@ -20,6 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, tasksdb, null, 1);
         this.context=context;
     }
+
     //Metodo que crea la base de datos
     @Override
     public void onCreate(SQLiteDatabase db) {

@@ -74,7 +74,6 @@ public class WelcomeActivity extends AppCompatActivity {
             //Color del circulo cuando esta activo
             mDots[position].setTextColor(getResources().getColor(R.color.primaryBlueWhite));
         }
-
     }
 
     //Escuchador de eventos del slider

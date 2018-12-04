@@ -30,9 +30,8 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         //Marca que utilizaremos la primera opcion del menu
         navigation.getMenu().getItem(0).setChecked(true);
-
-
     }
+
     //Listener del BottomNavigationView
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
