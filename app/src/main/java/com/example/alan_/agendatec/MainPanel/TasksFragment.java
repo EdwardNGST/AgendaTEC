@@ -346,7 +346,7 @@ public class TasksFragment extends Fragment {
                 idMax=idMax+1;
                 //Inserta la nueva tarea
                 if(priority!=0) {
-                    localDB.insertNewTask(idMax, txtTitleNewTask.getText().toString(), txtDescNewTask.getText().toString(), priority, date);
+                    localDB.insertNewTask(txtTitleNewTask.getText().toString(), txtDescNewTask.getText().toString(), priority, date);
                     Toast.makeText(context, "Elemento insertado", Toast.LENGTH_SHORT).show();
                 }
                 //Oculta el dialogo
